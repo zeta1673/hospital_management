@@ -23,10 +23,6 @@ public class StaffService {
         return (ArrayList<Staff>) staffRepository.findAll(Sort.by(Sort.Direction.ASC, field));
     }
 
-    // public ArrayList<Staff> findAllSorted() {
-    // return staffRepository.findAllSorted();
-    // }
-
     public Staff create(Staff staffMember) {
         return staffRepository.save(staffMember);
     }
