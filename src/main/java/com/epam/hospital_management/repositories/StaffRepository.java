@@ -10,5 +10,5 @@ import com.epam.hospital_management.models.Staff;
 
 public interface StaffRepository extends JpaRepository<Staff, Long> {
 
-    Page<Staff> findAll(Pageable pageable);
+    // Page<Staff> findAll(Pageable pageable);
 }

@@ -20,7 +20,7 @@ public class StaffService {
         return staffRepository.findById(id);
     }
 
-    public List<Staff> findAll(Pageable pageable) {
+    public List<Staff> findAll() {
         return staffRepository.findAll();
     }
 

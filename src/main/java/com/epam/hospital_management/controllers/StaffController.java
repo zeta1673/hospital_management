@@ -30,26 +30,34 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
+    @GetMapping()
+    private List<Staff> findAll() {
+        return staffService.findAll();
+    }
+
     @GetMapping("/{id}")
     private Optional<Staff> findById(@PathVariable Long id) {
         return staffService.findById(id);
     }
 
-    @GetMapping(params = "sortBy")
-    private ResponseEntity<List<Staff>> findAll(@RequestParam String sortBy, @RequestParam int pageNumber, @RequestParam int pageSize,
-            @RequestParam String sortOrder) {
+    // @GetMapping(params = "sortBy")
+    // private ResponseEntity<List<Staff>> findAll(@RequestParam String sortBy,
+    // @RequestParam int pageNumber, @RequestParam int pageSize,
+    // @RequestParam String sortOrder) {
 
-        if (sortOrder.equals("asc")) {
-            Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).ascending());
-            return staffService.findAll(pageable);
-        } else if (sortOrder.equals("desc")) {
-            Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).descending());
-            return staffService.findAll(pageable);
-        } else{
-            return
-        }   
+    // if (sortOrder.equals("asc")) {
+    // Pageable pageable = PageRequest.of(pageNumber, pageSize,
+    // Sort.by(sortBy).ascending());
+    // return staffService.findAll(pageable);
+    // } else if (sortOrder.equals("desc")) {
+    // Pageable pageable = PageRequest.of(pageNumber, pageSize,
+    // Sort.by(sortBy).descending());
+    // return staffService.findAll(pageable);
+    // } else{
+    // return
+    // }
 
-    }
+    // }
 
     @GetMapping(params = "sortBy")
     private List<Staff> findAllSorted(@RequestParam(defaultValue = "name") String sortBy) {
@@ -67,13 +75,6 @@ public class StaffController {
         } else {
             return staffService.findAll();
         }
-        // } else if (sortBy.equals("role")) {
-        // return staffService.findAll()
-        // .stream()
-        // .sorted(Comparator.comparingLong(Staff::getSpeciality))
-        // .collect(Collectors.toList());
-        // }
-
     }
 
     @PostMapping()
