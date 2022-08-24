@@ -1,9 +1,9 @@
 package com.epam.hospital_management.services;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.epam.hospital_management.models.Patient;
@@ -15,12 +15,12 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public ArrayList<Patient> findAll() {
-        return (ArrayList<Patient>) patientRepository.findAll();
+    public Optional<Patient> findById(Long id) {
+        return patientRepository.findById(id);
     }
 
-    public ArrayList<Patient> findAllSorted(String field) {
-        return (ArrayList<Patient>) patientRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+    public List<Patient> findAll() {
+        return patientRepository.findAll();
     }
 
     public Patient create(Patient patient) {

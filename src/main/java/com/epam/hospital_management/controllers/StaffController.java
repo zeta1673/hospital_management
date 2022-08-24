@@ -1,15 +1,23 @@
 package com.epam.hospital_management.controllers;
 
-import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epam.hospital_management.models.Staff;
@@ -22,14 +30,50 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
-    @GetMapping()
-    private ArrayList<Staff> findAll() {
-        return staffService.findAll();
+    @GetMapping("/{id}")
+    private Optional<Staff> findById(@PathVariable Long id) {
+        return staffService.findById(id);
     }
 
-    @GetMapping("/{field}")
-    private ArrayList<Staff> findAllSorted(@PathVariable String field) {
-        return staffService.findAllSorted(field);
+    @GetMapping(params = "sortBy")
+    private ResponseEntity<List<Staff>> findAll(@RequestParam String sortBy, @RequestParam int pageNumber, @RequestParam int pageSize,
+            @RequestParam String sortOrder) {
+
+        if (sortOrder.equals("asc")) {
+            Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).ascending());
+            return staffService.findAll(pageable);
+        } else if (sortOrder.equals("desc")) {
+            Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).descending());
+            return staffService.findAll(pageable);
+        } else{
+            return
+        }   
+
+    }
+
+    @GetMapping(params = "sortBy")
+    private List<Staff> findAllSorted(@RequestParam(defaultValue = "name") String sortBy) {
+
+        if (sortBy.equals("name")) {
+            return staffService.findAll()
+                    .stream()
+                    .sorted(Comparator.comparing(Staff::getName))
+                    .collect(Collectors.toList());
+        } else if (sortBy.equals("lastName")) {
+            return staffService.findAll()
+                    .stream()
+                    .sorted(Comparator.comparing(Staff::getLastName))
+                    .collect(Collectors.toList());
+        } else {
+            return staffService.findAll();
+        }
+        // } else if (sortBy.equals("role")) {
+        // return staffService.findAll()
+        // .stream()
+        // .sorted(Comparator.comparingLong(Staff::getSpeciality))
+        // .collect(Collectors.toList());
+        // }
+
     }
 
     @PostMapping()
