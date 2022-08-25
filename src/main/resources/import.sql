@@ -12,7 +12,7 @@ INSERT INTO service (id, name) VALUES(1, 'Consult');
 INSERT INTO service (id, name) VALUES(2, 'Chemotherapy');
 INSERT INTO service (id, name) VALUES(3, 'Blood test');
 INSERT INTO service (id, name) VALUES(4, 'Surgery');
-INSERT INTO service (id, name) VALUES(5, 'electroencephalogram');
+INSERT INTO service (id, name) VALUES(5, 'Electroencephalogram');
 INSERT INTO service (id, name) VALUES(6, 'x-ray');
 
 
@@ -32,3 +32,7 @@ INSERT INTO patient (name, last_name, birth_date) VALUES('Luke', 'Skywalker', '1
 INSERT INTO patient (name, last_name, birth_date) VALUES('Daniel', 'Reiskin', '1989-08-21');
 
 INSERT INTO hospital_card (id, diagnosis, start_date, end_date, id_patient, id_service, id_staff) VALUES(1, 'Cancer', '2022-08-24', '2022-08-25', 2, 2, 1);
+INSERT INTO hospital_card (id, diagnosis, start_date, end_date, id_patient, id_service, id_staff) VALUES(2, 'Clavicle fracture', '2022-08-24', '2022-08-25', 1, 6, 2);
+INSERT INTO hospital_card (id, diagnosis, start_date, end_date, id_patient, id_service, id_staff) VALUES(3, 'Epilepsy', '2022-08-24', '2022-08-25', 4, 5, 6);
+INSERT INTO hospital_card (id, diagnosis, start_date, end_date, id_patient, id_service, id_staff) VALUES(4, 'Diabetes', '2022-08-24', '2022-08-25', 5, 3, 2);
+INSERT INTO hospital_card (id, diagnosis, start_date, end_date, id_patient, id_service, id_staff) VALUES(5, 'Appendicitis', '2022-08-24', '2022-08-25', 7, 4, 5);

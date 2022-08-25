@@ -1,9 +1,10 @@
 package com.epam.hospital_management.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.epam.hospital_management.models.Patient;
@@ -19,12 +20,16 @@ public class PatientService {
         return patientRepository.findById(id);
     }
 
-    public List<Patient> findAll() {
-        return patientRepository.findAll();
+    public Page<Patient> findAll(Pageable pageable) {
+        return patientRepository.findAll(pageable);
     }
 
     public Patient create(Patient patient) {
         return patientRepository.save(patient);
+    }
+
+    public void deleteById(Long id) {
+        patientRepository.deleteById(id);
     }
 
 }

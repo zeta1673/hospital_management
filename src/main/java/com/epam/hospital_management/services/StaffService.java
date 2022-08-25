@@ -1,6 +1,5 @@
 package com.epam.hospital_management.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +20,13 @@ public class StaffService {
         return staffRepository.findById(id);
     }
 
-    public Page<Staff> findAll(Pageable pageable) {
-        return (Page<Staff>) staffRepository.findAll();
+    public void deleteById(Long id) {
+        staffRepository.deleteById(id);
     }
 
-    // public List<Staff> findAllSorted(String field) {
-    // return (ArrayList<Staff>) staffRepository.findAll(Sort.by(Sort.Direction.ASC,
-    // field));
-    // }
+    public Page<Staff> findAll(Pageable pageable) {
+        return staffRepository.findAll(pageable);
+    }
 
     public Staff create(Staff staffMember) {
         return staffRepository.save(staffMember);
