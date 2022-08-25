@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public class StaffService {
         return staffRepository.findById(id);
     }
 
-    public List<Staff> findAll() {
-        return staffRepository.findAll();
+    public Page<Staff> findAll(Pageable pageable) {
+        return (Page<Staff>) staffRepository.findAll();
     }
 
     // public List<Staff> findAllSorted(String field) {

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epam.hospital_management.models.Staff;
+import com.epam.hospital_management.repositories.StaffRepository;
 import com.epam.hospital_management.services.StaffService;
 
 @RestController
@@ -30,20 +32,33 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
-    @GetMapping()
-    private List<Staff> findAll() {
-        return staffService.findAll();
-    }
+    @Autowired
+    private StaffRepository staffRepository;
+
+    // @GetMapping()
+    // private List<Staff> findAll() {
+    // return staffService.findAll();
+    // }
 
     @GetMapping("/{id}")
     private Optional<Staff> findById(@PathVariable Long id) {
         return staffService.findById(id);
     }
 
+    @GetMapping()
+    private Page<Staff> findAll(@RequestParam Optional<Integer> pageNumber,
+            @RequestParam Optional<Integer> pageSize, @RequestParam Optional<String> sortBy,
+            @RequestParam Optional<String> order) {
+
+        return staffRepository
+                .findAll(PageRequest.of(pageNumber.orElse(0), pageSize.orElse(5), Sort.Direction.ASC,
+                        sortBy.orElse("id")));
+    }
+
     // @GetMapping(params = "sortBy")
-    // private ResponseEntity<List<Staff>> findAll(@RequestParam String sortBy,
-    // @RequestParam int pageNumber, @RequestParam int pageSize,
-    // @RequestParam String sortOrder) {
+    // private ResponseEntity<List<Staff>> findAll(@RequestParam String
+    // sortBy,@RequestParam int pageNumber,
+    // @RequestParam int pageSize, @RequestParam String sortOrder) {
 
     // if (sortOrder.equals("asc")) {
     // Pageable pageable = PageRequest.of(pageNumber, pageSize,
@@ -59,23 +74,24 @@ public class StaffController {
 
     // }
 
-    @GetMapping(params = "sortBy")
-    private List<Staff> findAllSorted(@RequestParam(defaultValue = "name") String sortBy) {
+    // @GetMapping(params = "sortBy")
+    // private List<Staff> findAllSorted(@RequestParam(defaultValue = "name") String
+    // sortBy) {
 
-        if (sortBy.equals("name")) {
-            return staffService.findAll()
-                    .stream()
-                    .sorted(Comparator.comparing(Staff::getName))
-                    .collect(Collectors.toList());
-        } else if (sortBy.equals("lastName")) {
-            return staffService.findAll()
-                    .stream()
-                    .sorted(Comparator.comparing(Staff::getLastName))
-                    .collect(Collectors.toList());
-        } else {
-            return staffService.findAll();
-        }
-    }
+    // if (sortBy.equals("name")) {
+    // return staffService.findAll()
+    // .stream()
+    // .sorted(Comparator.comparing(Staff::getName))
+    // .collect(Collectors.toList());
+    // } else if (sortBy.equals("lastName")) {
+    // return staffService.findAll()
+    // .stream()
+    // .sorted(Comparator.comparing(Staff::getLastName))
+    // .collect(Collectors.toList());
+    // } else {
+    // return staffService.findAll();
+    // }
+    // }
 
     @PostMapping()
     private Staff staffMember(@Valid @RequestBody Staff staffMember) {
