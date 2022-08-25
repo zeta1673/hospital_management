@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,10 +49,10 @@ public class StaffController {
     @GetMapping()
     private Page<Staff> findAll(@RequestParam Optional<Integer> pageNumber,
             @RequestParam Optional<Integer> pageSize, @RequestParam Optional<String> sortBy,
-            @RequestParam Optional<String> order) {
+            @RequestParam Optional<Direction> order) {
 
         return staffRepository
-                .findAll(PageRequest.of(pageNumber.orElse(0), pageSize.orElse(5), Sort.Direction.ASC,
+                .findAll(PageRequest.of(pageNumber.orElse(0), pageSize.orElse(5), order.orElse(Direction.ASC),
                         sortBy.orElse("id")));
     }
 
