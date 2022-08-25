@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "staff")
-public class Staff implements Serializable {
+public class Staff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +33,15 @@ public class Staff implements Serializable {
     private String lastName;
 
     @ManyToOne
+
+    @JoinColumn(name = "id_role")
     private Role role;
 
     @ManyToOne
+    @JoinColumn(name = "id_speciality")
     private Speciality speciality;
 
+    // @Transient
+    // @Formula("(SELECT COUNT (*) FROM hospital_card WHERE id_staff = ?1)")
+    // private Long patientCount;
 }

@@ -1,6 +1,7 @@
 package com.epam.hospital_management.services;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,15 @@ public class HospitalCardService {
     @Autowired
     private HospitalCardRepository hospitalCardRepository;
 
-    public ArrayList<HospitalCard> findAll() {
-        return (ArrayList<HospitalCard>) hospitalCardRepository.findAll();
+    public List<HospitalCard> findAll() {
+        return hospitalCardRepository.findAll();
     }
 
-    public HospitalCard create(HospitalCard hospitalCard){
+    public Optional<HospitalCard> findById(Long id) {
+        return hospitalCardRepository.findById(id);
+    }
+
+    public HospitalCard create(HospitalCard hospitalCard) {
         return hospitalCardRepository.save(hospitalCard);
     }
 }

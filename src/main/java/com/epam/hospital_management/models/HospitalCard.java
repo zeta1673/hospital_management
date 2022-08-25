@@ -36,4 +36,5 @@ public class HospitalCard {
     @ManyToOne
     @JoinColumn(name = "id_staff")
     private Staff staff;
+
 }

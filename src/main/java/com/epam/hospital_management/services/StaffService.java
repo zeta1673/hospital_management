@@ -1,9 +1,11 @@
 package com.epam.hospital_management.services;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.epam.hospital_management.models.Staff;
@@ -15,16 +17,17 @@ public class StaffService {
     @Autowired
     private StaffRepository staffRepository;
 
-    public ArrayList<Staff> findAll() {
-        return (ArrayList<Staff>) staffRepository.findAll();
+    public Optional<Staff> findById(Long id) {
+        return staffRepository.findById(id);
     }
 
-    public ArrayList<Staff> findAllSorted(String field) {
-        return (ArrayList<Staff>) staffRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+    public Page<Staff> findAll(Pageable pageable) {
+        return (Page<Staff>) staffRepository.findAll();
     }
 
-    // public ArrayList<Staff> findAllSorted() {
-    // return staffRepository.findAllSorted();
+    // public List<Staff> findAllSorted(String field) {
+    // return (ArrayList<Staff>) staffRepository.findAll(Sort.by(Sort.Direction.ASC,
+    // field));
     // }
 
     public Staff create(Staff staffMember) {

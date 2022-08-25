@@ -32,4 +32,9 @@ public class Patient implements Serializable {
     private String lastName;
 
     private LocalDate birthDate;
+
+    // @ManyToOne
+    // @JoinColumn(name = "id_doctor")
+    // private Staff staff;
+
 }
