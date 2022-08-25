@@ -1,6 +1,5 @@
 package com.epam.hospital_management.models;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
@@ -17,7 +16,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "patient")
-public class Patient implements Serializable {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
