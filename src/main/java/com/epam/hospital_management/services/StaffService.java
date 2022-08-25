@@ -1,6 +1,8 @@
 package com.epam.hospital_management.services;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.epam.hospital_management.models.Staff;
+import com.epam.hospital_management.repositories.PatientRepository;
 import com.epam.hospital_management.repositories.StaffRepository;
 
 @Service
@@ -15,6 +18,9 @@ public class StaffService {
 
     @Autowired
     private StaffRepository staffRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
 
     public Optional<Staff> findById(Long id) {
         return staffRepository.findById(id);
@@ -24,8 +30,15 @@ public class StaffService {
         staffRepository.deleteById(id);
     }
 
-    public Page<Staff> findAll(Pageable pageable) {
-        return staffRepository.findAll(pageable);
+    public List<Staff> findAll(Pageable pageable) {
+        List<Staff> list = staffRepository.findAll(pageable).toList();
+
+        list.stream().forEach(staff -> {
+            Long count = patientRepository.countPatient(staff.getId());
+            staff.setPatientCount(count);
+        });
+
+        return list;
     }
 
     public Staff create(Staff staffMember) {

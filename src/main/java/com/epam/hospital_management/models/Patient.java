@@ -32,8 +32,4 @@ public class Patient {
 
     private LocalDate birthDate;
 
-    // @ManyToOne
-    // @JoinColumn(name = "id_doctor")
-    // private Staff staff;
-
 }

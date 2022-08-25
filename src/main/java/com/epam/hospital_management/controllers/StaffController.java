@@ -1,12 +1,12 @@
 package com.epam.hospital_management.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class StaffController {
     }
 
     @GetMapping()
-    private Page<Staff> findAll(@RequestParam Optional<Integer> pageNumber,
+    private List<Staff> findAll(@RequestParam Optional<Integer> pageNumber,
             @RequestParam Optional<Integer> pageSize, @RequestParam Optional<String> sortBy,
             @RequestParam Optional<Direction> order) {
 
@@ -55,10 +55,10 @@ public class StaffController {
         try {
             staffService.findById(id);
             staffService.deleteById(id);
+            return new ResponseEntity<>("staff member deleted", HttpStatus.OK);
         } catch (DataAccessException e) {
             return new ResponseEntity<>("error deleting the data", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>("staff member deleted", HttpStatus.OK);
     }
 
 }
