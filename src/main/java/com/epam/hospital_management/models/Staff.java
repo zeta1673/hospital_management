@@ -1,7 +1,5 @@
 package com.epam.hospital_management.models;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,7 +39,4 @@ public class Staff {
     @JoinColumn(name = "id_speciality")
     private Speciality speciality;
 
-    // @Transient
-    // @Formula("(SELECT COUNT (*) FROM hospital_card WHERE id_staff = ?1)")
-    // private Long patientCount;
 }
