@@ -32,7 +32,6 @@ public class Staff {
     private String lastName;
 
     @ManyToOne
-
     @JoinColumn(name = "id_role")
     private Role role;
 
